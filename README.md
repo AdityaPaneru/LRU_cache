@@ -1,12 +1,14 @@
+<<<<<<< HEAD
+# LRU_cache
+=======
 # LRU Cache Implementation
 
-[![Build and Test](https://github.com/YOUR_USERNAME/LRU-Cache-Implementation/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/YOUR_USERNAME/LRU-Cache-Implementation/actions)
+[![Build and Test](https://github.com/AdityaPaneru/LRU-Cache-Implementation/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/AdityaPaneru/LRU-Cache-Implementation/actions)
 
-> **Before pushing to GitHub:** Replace `YOUR_USERNAME` in the badge above with your GitHub username so the badge shows your workflow status (e.g. `ayush-agarwal`).
 
 An **LRU (Least Recently Used)** cache implementation in C++ using a **doubly linked list** and an **unordered map**. The cache stores **strings** with **integer keys**, suitable for scenarios like page caching (e.g., page number → page content).
 
-- **Author:** Ayush Agarwal  
+- **Author:** Aditya Paneru 
 - **Relevant areas:** Data Structures & Algorithms (DSA), Object-Oriented Programming (OOP), Operating Systems (OS)  
 - **Language:** C++  
 
@@ -342,3 +344,4 @@ Passed: 10  Failed: 0
 ---
 
 *Project by Ayush Agarwal — DSA, OOP, OS.*
+>>>>>>> c6bd712 (LRU Cache implementation)
