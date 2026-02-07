@@ -1,8 +1,5 @@
 # LRU Cache Implementation
 
-[![Build and Test](https://github.com/AdityaPaneru/LRU-Cache-Implementation/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/AdityaPaneru/LRU-Cache-Implementation/actions)
-
-
 An **LRU (Least Recently Used)** cache implementation in C++ using a **doubly linked list** and an **unordered map**. The cache stores **strings** with **integer keys**, suitable for scenarios like page caching (e.g., page number → page content).
 
 - **Author:** Aditya Paneru 
