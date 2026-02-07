@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# LRU_cache
-=======
 # LRU Cache Implementation
 
 [![Build and Test](https://github.com/AdityaPaneru/LRU-Cache-Implementation/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/AdityaPaneru/LRU-Cache-Implementation/actions)
@@ -344,4 +341,3 @@ Passed: 10  Failed: 0
 ---
 
 *Project by Ayush Agarwal — DSA, OOP, OS.*
->>>>>>> c6bd712 (LRU Cache implementation)
