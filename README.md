@@ -1,61 +1,344 @@
-# LRU-Cache-Implementation
-LRU (Least Recently Used ) Cache implementation using Doubly Linked List and Unordered Map 
+# LRU Cache Implementation
 
-* Project by - Ayush Agarwal 
-* Fields/Subjects - Data Structures and Algorithms (DSA) , Object Oriented Programming (OOPS) , Operating System (OS) 
-* Tools (Programming Language) - C++ 
+[![Build and Test](https://github.com/YOUR_USERNAME/LRU-Cache-Implementation/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/YOUR_USERNAME/LRU-Cache-Implementation/actions)
 
-The code has been well explained in comments by me , refer to it for explanation . 
+> **Before pushing to GitHub:** Replace `YOUR_USERNAME` in the badge above with your GitHub username so the badge shows your workflow status (e.g. `ayush-agarwal`).
 
-## Motivation 
-Most of the codes available online were for storing integers in Cache , however , I felt that storing string data would be more useful since this way we could store both text and numbers in the cache . Furthermore , I have used integers as keys and string as the data . The reason for this is as follows: Suppose we have a server which has to send out data after receiving the requests . Suppose that the data is text , stored in many pages , and each page has its page number . Now , the server decided to use LRU Cache since extracting pages from the secondary memory is a time consuming affair , hence LRU Cacheing strategy has been employed . So we need the Cache to store strings , since the text on the pages will be in string format . Moreover the keys would page numbers , which would be integers , and the requester can easily request for a specific page number and get the text on that page stored in that server . 
+An **LRU (Least Recently Used)** cache implementation in C++ using a **doubly linked list** and an **unordered map**. The cache stores **strings** with **integer keys**, suitable for scenarios like page caching (e.g., page number → page content).
 
-## Usage in backend servers :
-As explained in the motivation part , a Backend server of a website needs to deliver content faster to the requesting client , so the LRU Caching stratergy is used for caching data , since cache speed is much faster than the access speed of the secondary emory of the server .
+- **Author:** Ayush Agarwal  
+- **Relevant areas:** Data Structures & Algorithms (DSA), Object-Oriented Programming (OOP), Operating Systems (OS)  
+- **Language:** C++  
 
-## Usage of LRU in Page Replacement in Operating Systems :
-I've written this explanation based on my understanding rather than from a source , hence if you find any errors please feel free to reach out to me . 
-* For optimising the CPU usage , we need to execute more than one process at once (since a process may request for I/O , then go into suspended state and go to the __Process Control Board (PCB)__ leaving the CPU idle and decreasing efficiency . Hence the __Degree of MultiProgramming__ needs to be increased .
-* So __Memory Management techniques__ are employed , they can be of 2 types , contiguous and non contiguous . This work is done by __Memory Management Unit (MMU)__ .
-* __Contiguous Memory Allocation algorithms__ are __First fit , Next fit , Best Fit and Worst Fit__ . However they suffer from __External Fragmentation__ , meaning wasteage of memory due to holes between process causing a condition that a process will not be able to enter the main memory even if there is enough space in the memory .
-* So we go for __discontinuous allocation of memory__ . 
-* We perform __Paging__ . In this each process is divided into __pages__ , and the main memory is divided into __frames__ , and few pages of each process are taken to the __main memory__ (RAM) . Each Process has its own __Page Table__ , throught which it converts the __Logical Address__ of the page into __Physical Address__ , which is then used to access the page . (Paging is not the same as __Segmentation__ and __Overlay__ , in which we leave the work of dividing the process into (unequal) parts called segments and then sending them to the memory . Segmentation and Overlay is used mostly in Embedded Systems , where the processes are known beforehand )(This is only true for __Single Layer Paging__ , and bit different from __2 layer paging (multi layer paging)__ and __Inverted Paging (global page table) respectively )__ .
-* Paging also introduces the concept of __Virtual Memory__ , which allows us to run Processes with sizes significantly bigger than the main memory (RAM) itself .
-* However , it also introduces the concept of __Thrashing__ , which means that after a certain degree of multiprogramming , Page Faults will start increasing so much that the efficiency will decrease , i.e. efficiency does not directly increase with the degree of multiprogramming always .
-* __Page Fault__ is when a particular page requested by the CPU is not found in the main memory (no reference address found in page table) , and hence has to be fetched from the secondary memory .  This uses a lot of time called __Page Fault Service Time__ . 
-* Since Page Table is also stored in the main memory , searching for address of a page in the page table can also becomme a slow process . Hence we use __Translational Lookaside Buffers (TLB)__ which are even faster caches , and store a part of the page table . However they are far more expensive hence limited in size . This leaves us with conclusion that we need to reduce the number of Page Faults to increase the efficiency of system , and reduce thrashing and reduce time wasted in Page Fault Service Time . 
-* Hence we use __Page Replacement Algorithms__ . 
-* We have 4 types of page replacement algorithms : 
-  * First In First Out (FIFO)
-  * Optimal Page Replacement Algorithm 
-  * Least Recently Used Algorithm 
-  * Most Recently Used Algorithm 
-* __First In First Out (FIFO) algorithm__ is fastest , but it suffers from __Belady's Anommaly__ ( increase in number of page hits with increase in memory in FIFO page replacement case due to non stack like behaviour ) which limits its power . 
-* __Optimal Page Replacement Algorithm__ replaces the page which is going to be needed far in future compared to the other pages in memory . This is of course the most optimal thing to do , since it keeps the items for quick access . However , I feel it needs future sequence of Page requests which may or may not be known (I assumed it was not known to me while making this Project ) . 
-* __Least Recently Used (LRU) Algorithm__ throws away the least recently used page from the main memory . It makes sense since the thing which has not been in demand recently may not be in demand in immidiate future also , meanwhile the recently used items may come again in use , hence should be kept . However LRU needs some memory to keep track of which pages came first etc . I feel this is not much of a problem as in a tradeoff of time vs memory , memory only gets cheaper with time whereas time only gets costlier (i.e. memories become cheaper in future , and we tend to look for time optimisation of things) . Hence I decided to make this one myself . 
-* __Most Recently Used (MRU) Algorithm__ throws away the page which was most recently used among all the pages in the main memory . This at first sounded a bit ironic to me , but realised that it might be useful when it is known that something used is less likely to be used again in near future . Still I personally find LRU more intutively advantageous to me . The basic advantage might also be that we do not need to keep track of the whole past , just the most recent process , which makes its memory demand in between that of LRU and FIFO . ( Correct me if I'm wrong with the advantages and disadvantages , I did what I felt here) .
-* __Hence I implemented LRU Cache ( A data structure with properties suitable to implement LRU Page Replacement Algorithm )__ . 
+---
 
-# Code 
+## Table of Contents
 
-## Class Declaration 
-![image](https://user-images.githubusercontent.com/86561124/172538502-211579aa-fe95-4856-9115-e00228066008.png)
+- [Project Structure](#project-structure)
+- [What is an LRU Cache?](#what-is-an-lru-cache)
+- [Project Flow (How It Works)](#project-flow-how-it-works)
+- [Data Structures Used](#data-structures-used)
+- [API Reference](#api-reference)
+- [Build and Run](#build-and-run)
+- [Running Tests](#running-tests)
+- [Is the code working?](#is-the-code-working)
+- [Example Run and Output](#example-run-and-output)
+- [Motivation and Use Cases](#motivation-and-use-cases)
+- [LRU in Operating Systems](#lru-in-operating-systems)
+- [Code Overview](#code-overview)
 
-## Constructor 
-![image](https://user-images.githubusercontent.com/86561124/172538536-bbe251ec-8644-4ac8-a832-cb9e71422231.png)
+---
 
-## SIZE Method 
-![image](https://user-images.githubusercontent.com/86561124/172538549-96f3d9fd-17ef-410f-92e7-a56d6fec1e55.png)
+## Project Structure
 
-## FEEDIN Method 
-![image](https://user-images.githubusercontent.com/86561124/172538565-104a36aa-e513-48da-8863-713e37c9087c.png)
-![image](https://user-images.githubusercontent.com/86561124/172538574-03461f2a-ebdb-45d3-9ed2-b7f2d2b62a14.png)
+```
+LRU-Cache-Implementation/
+├── include/
+│   └── LRU_Cache.hpp      # LRU cache class (header-only)
+├── src/
+│   └── main.cpp           # Demo program
+├── tests/
+│   └── test_lru_cache.cpp # Test suite
+├── Makefile               # Build on Linux/macOS
+├── build.ps1              # Build + run tests on Windows (PowerShell)
+├── .gitignore
+├── README.md
+└── LRU Cache Project File.cpp   # Original single-file version (legacy)
+```
 
-## GETTIN Method 
-![image](https://user-images.githubusercontent.com/86561124/172538611-e6e2969e-cf87-43f1-afbd-e231377449ac.png)
+---
 
-## TestBench 
-![image](https://user-images.githubusercontent.com/86561124/172538631-b414bbe2-c3df-496e-a41b-c24a4f65a92c.png)
+## What is an LRU Cache?
 
-## Output of the run 
-![image](https://user-images.githubusercontent.com/86561124/172538710-96ed317e-b17d-4459-8220-38cc36e2c9ba.png)
+In an LRU cache:
+
+- **Recently used** items are kept “at the front” (fast to access).
+- When the cache is **full**, the **least recently used** item is **evicted** to make room for the new one.
+
+So the cache automatically keeps “hot” data and drops “cold” data, which is useful for speeding up repeated lookups (e.g., in servers or in OS page replacement).
+
+---
+
+## Project Flow (How It Works)
+
+1. **Creation**  
+   - You create an `LRU_Cache` with a fixed **capacity** (e.g., 2).  
+   - Internally: an empty list and an empty map are ready.
+
+2. **Insert/Update (`feedin(key, data)`)**  
+   - **If the key is new:**
+     - If the cache is **full**, the **last** element in the list (least recently used) is removed from both the list and the map.
+     - The new `(key, data)` is added at the **front** of the list and the map stores `key → iterator` to that node.
+   - **If the key already exists:**
+     - The old list node for that key is removed, and the new data is inserted at the **front**.
+     - The map is updated so the key points to this new front node.
+
+3. **Lookup (`gettin(key)`)**  
+   - If the key is in the map, the value at the stored iterator is returned.  
+   - If not, `"0"` is returned (meaning “not in cache”).
+
+**Order in the list:**  
+- **Front** = most recently inserted/updated.  
+- **Back** = least recently inserted/updated (candidate for eviction when full).
+
+---
+
+## Data Structures Used
+
+| Component | Type | Role |
+|----------|------|------|
+| `L` | `list<string>` (doubly linked list) | Stores the cached strings. Front = MRU, back = LRU. |
+| `M` | `unordered_map<int, list<string>::iterator>` | Maps each integer key to the list iterator of its value for O(1) lookup and update. |
+| `capacity` | `int` | Maximum number of entries in the cache. |
+
+**Why this design?**
+
+- **List:** Moving a node to the front or removing the back is O(1).
+- **Map:** Finding whether a key exists and getting its iterator is O(1) on average.
+- Together they give **O(1)** `feedin` and `gettin` in typical use.
+
+---
+
+## API Reference
+
+| Method | Description |
+|--------|-------------|
+| `LRU_Cache(int cap)` | Constructor. `cap` must be > 0; otherwise a warning is printed and capacity is 0. |
+| `int size()` | Returns the cache capacity (not the current number of elements). |
+| `void feedin(int key, string data)` | Inserts or updates `data` for `key`. On full cache, evicts the least recently used entry. |
+| `string gettin(int key)` | Returns the string for `key`, or `"0"` if the key is not in the cache. |
+
+---
+
+## Build and Run
+
+### Prerequisites
+
+- A C++ compiler (e.g., **g++**, **MinGW**, or **MSVC**) with C++17 (or C++11 minimum).
+
+### Option 1: Build scripts
+
+**Windows (PowerShell)** — builds demo + tests and runs tests:
+
+```powershell
+cd "c:\Users\adity\projects\LRU-Cache-Implementation"
+.\build.ps1
+```
+
+**Linux / macOS (Makefile):**
+
+```bash
+make all      # build demo and tests
+make run      # run demo
+make run-test # run tests
+make clean    # remove binaries
+```
+
+### Option 2: Manual build
+
+From the project root:
+
+```powershell
+# Demo
+g++ -std=c++17 -Wall -I. -o lru_cache.exe src/main.cpp
+
+# Tests
+g++ -std=c++17 -Wall -I. -o test_lru_cache.exe tests/test_lru_cache.cpp
+```
+
+### Run demo
+
+```powershell
+.\lru_cache.exe
+```
+
+On Linux/macOS: `./lru_cache`
+
+---
+
+## Running Tests
+
+The test suite checks capacity, eviction, updates, and edge cases. All tests must pass before pushing to GitHub.
+
+**Run tests:**
+
+```powershell
+.\test_lru_cache.exe
+```
+
+On Linux/macOS: `./test_lru_cache`
+
+**Expected output (all pass):**
+
+```
+LRU Cache test suite
+--------------------
+  test_capacity_and_size ... OK
+  test_single_insert_and_get ... OK
+  test_eviction_when_full ... OK
+  test_update_existing_key ... OK
+  test_mru_order_after_get ... OK
+  test_multiple_evictions ... OK
+  test_empty_key_lookup ... OK
+  test_capacity_one ... OK
+  test_string_content ... OK
+  test_demo_flow ... OK
+--------------------
+Passed: 10  Failed: 0
+```
+
+**Test cases covered:**
+
+| Test | Description |
+|------|-------------|
+| `test_capacity_and_size` | Constructor and `size()` |
+| `test_single_insert_and_get` | One key-value insert and get |
+| `test_eviction_when_full` | LRU eviction when capacity exceeded |
+| `test_update_existing_key` | Updating a key moves it to MRU |
+| `test_mru_order_after_get` | `gettin()` does not change order (eviction by write only) |
+| `test_multiple_evictions` | Several evictions in sequence |
+| `test_empty_key_lookup` | Missing keys return `"0"` |
+| `test_capacity_one` | Cache of size 1 |
+| `test_string_content` | Non-numeric string values |
+| `test_demo_flow` | Matches original demo behaviour |
+
+---
+
+## Example Run and Output
+
+The `main()` in the project file does the following:
+
+1. Creates an LRU cache of **capacity 2**.
+2. Prints the cache size: `2`.
+3. Calls:
+   - `feedin(1, "beta")`  → cache: `[beta]`
+   - `feedin(3, "alpha")` → cache: `[alpha, beta]`
+   - `feedin(8, "gamma")` → cache is full; **key 1 ("beta")** is evicted → cache: `[gamma, alpha]`
+4. Then:
+   - `gettin(1)` → key 1 was evicted → **0**
+   - `gettin(3)` → **alpha**
+   - `gettin(6)` → never inserted → **0**
+   - `gettin(8)` → **gamma**
+
+**Expected output:**
+
+```
+The size of this LRU Cache is : 2
+0
+alpha
+0
+gamma
+```
+
+---
+
+## Motivation and Use Cases
+
+- Many examples online implement LRU caches for **integers** only. Here the cache stores **strings** with **integer keys**, so you can cache text (or any string data) by a numeric id (e.g., page number).
+- **Example:** A server has text stored in “pages” with page numbers. To avoid slow reads from disk, it keeps recently requested pages in an LRU cache: key = page number (int), value = page content (string). This project mirrors that idea.
+- **Backend servers:** LRU is commonly used to cache responses or data so that frequently requested content is served from memory instead of secondary storage, improving latency.
+
+---
+
+## LRU in Operating Systems
+
+*(Summary of the ideas behind LRU in OS; for exact terminology and details, refer to your course material.)*
+
+- To use the CPU well, we run many processes (multiprogramming). When a process waits for I/O, the CPU can run others.
+- **Memory management** (e.g., **paging**) divides processes into **pages** and memory into **frames**. Only some pages of each process are in RAM; the rest stay on disk (**virtual memory**).
+- A **page fault** occurs when the CPU needs a page that is not in RAM; that page must be brought in from disk (**page fault service time**), which is slow.
+- **Page replacement algorithms** decide which page in RAM to evict when a new page must be brought in. One of them is **LRU**: evict the **least recently used** page, under the assumption that recently used pages are more likely to be used again soon.
+- Other algorithms include **FIFO**, **Optimal**, and **MRU**. This project implements the **data structure** that supports an LRU-style policy (evict least recently used when full).
+
+---
+
+## Code Overview
+
+### Class structure
+
+The main implementation lives in `include/LRU_Cache.hpp`:
+
+```cpp
+class LRU_Cache {
+public:
+    LRU_Cache(int cap);
+    int size() const;
+    void feedin(int key, const std::string& data);
+    std::string gettin(int key) const;
+private:
+    std::list<std::string> L;                           // front = MRU, back = LRU
+    std::unordered_map<int, std::list<std::string>::iterator> M;
+    int capacity;
+};
+```
+
+### Constructor
+
+- Checks `cap > 0`; if not, prints an error and leaves capacity as 0.
+- Clears `L` and `M`.
+
+### `feedin(key, data)`
+
+- **Key not in cache:**  
+  - If `L.size() == capacity`, find the key that points to the last element in `L`, erase it from `M`, then `L.pop_back()`.  
+  - Then `L.push_front(data)` and `M[key] = L.begin()`.
+- **Key already in cache:**  
+  - `L.erase(M[key])`, then `L.push_front(data)` and `M[key] = L.begin()`.
+
+### `gettin(key)`
+
+- If key is not in `M`, return `"0"`.
+- Otherwise return `*M[key]` (the string at that iterator).
+
+---
+
+## Notes
+
+- **Eviction policy:** Eviction is based on **insertion/update order** (when each key was last **written**), not on **read** order. So `gettin(key)` does **not** move that key to “most recently used” in the list. If you want classic “LRU by access,” a `gettin` that finds the key could move its node to the front and update `M[key]`.
+- The original single-file version with detailed comments is in `LRU Cache Project File.cpp`. The refactored implementation is in `include/LRU_Cache.hpp` and `src/main.cpp`.
+
+---
+
+## Is the code working?
+
+**On GitHub:** The [badge](#lru-cache-implementation) at the top of this README shows the status of the **Build and Test** workflow. After you push and replace `YOUR_USERNAME` in the badge URL, it will show **passing** (green) when build and all 10 tests succeed. You can also open the **Actions** tab in your repo to see the latest run and logs.
+
+**Locally:** Build and run the test suite. If you see `Passed: 10  Failed: 0` and exit code 0, the code is working.
+
+```bash
+# Linux/macOS
+make all && ./test_lru_cache
+
+# Or manually
+g++ -std=c++17 -Wall -I. -o test_lru_cache tests/test_lru_cache.cpp && ./test_lru_cache
+```
+
+```powershell
+# Windows (PowerShell)
+.\build.ps1
+```
+
+Expected test output when everything works:
+
+```
+LRU Cache test suite
+--------------------
+  test_capacity_and_size ... OK
+  test_single_insert_and_get ... OK
+  ... (all 10 tests OK)
+--------------------
+Passed: 10  Failed: 0
+```
+
+---
+
+## For GitHub
+
+- **Badge:** Replace `YOUR_USERNAME` in the README badge URL with your GitHub username so the badge reflects your repo’s workflow status.
+- Run the test suite before pushing: `.\test_lru_cache.exe` (Windows) or `./test_lru_cache` (Linux/macOS). Ensure all 10 tests pass.
+- Use `build.ps1` (Windows) or `make all && make run-test` (Linux/macOS) to build and verify in one step.
+- The `.gitignore` excludes build artifacts (`*.exe`, `*.o`, etc.); do not commit binaries.
+
+---
+
+*Project by Ayush Agarwal — DSA, OOP, OS.*
