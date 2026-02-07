@@ -20,7 +20,7 @@ using namespace std;
 // and the least recently used data is thrown out of cache 
 // LRU Cache can be implemented using DOUBLY LINKED LIST and UNORDERED MAP 
 
-//////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////?
 // Declaring a class for LRU cache 
 class LRU_Cache{
     
@@ -35,7 +35,7 @@ class LRU_Cache{
     int capacity ;
     
 //////////////////////////////////////////////////////////////////////    
-    // CONSTRUCTOR 
+    // CONSTRUCTOR -->
     LRU_Cache(int cap){
         // Capacity being less than 0 dosent make any sense ,
         // so setting warnings for the same 
