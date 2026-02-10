@@ -2,7 +2,7 @@
 
 Project - LRU Cache implementation 
 Name - Aditya Paneru 
-College - IIT BHU Varanasi 
+College - IIIT Lucknow 
 
 */
 #include <iostream>
