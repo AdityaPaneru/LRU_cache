@@ -1,7 +1,7 @@
 /*
 
 Project - LRU Cache implementation 
-Name - Ayush Agarwal 
+Name - Aditya Paneru 
 College - IIT BHU Varanasi 
 
 */
@@ -20,7 +20,7 @@ using namespace std;
 // and the least recently used data is thrown out of cache 
 // LRU Cache can be implemented using DOUBLY LINKED LIST and UNORDERED MAP 
 
-/////////////////////////////////////////////////////////////////////?
+//////////////////////////////////////////////////////////////////////
 // Declaring a class for LRU cache 
 class LRU_Cache{
     
@@ -36,7 +36,7 @@ class LRU_Cache{
     
 //////////////////////////////////////////////////////////////////////    
     // CONSTRUCTOR -->
-    LRU_Cache(int cap){
+    LRU_Cache(int cap) : capacity(0){
         // Capacity being less than 0 dosent make any sense ,
         // so setting warnings for the same 
         if(cap>0){
@@ -52,18 +52,18 @@ class LRU_Cache{
     }
 ///////////////////////////////////////////////////////////////////
     // The METHOD SIZE of this class returns the capacity of the cache 
-    int size(){
+    int size() const {
         return capacity;
     }
 //////////////////////////////////////////////////////////////////    
     // The METHOD FEEDIN is used to feed the data to the cache 
-    void feedin(int key , string data){
+    void feedin(int key , const string& data){
         
         // if key not present in cache already 
         if(M.find(key)==M.end()){
             // when cache is full then remove last then insert else just insert 
             // so we just need if rather than if else 
-            if(L.size()==capacity){
+            if(capacity > 0 && L.size()==(size_t)capacity){
                 // remove the last element first from map then from list  
                 
                 // removing from map 
@@ -106,7 +106,7 @@ class LRU_Cache{
     }
 ////////////////////////////////////////////////////////////////////////// 
     // The METHOD GETTIN is used for getting the data for a certain key from LRU Cache 
-    string gettin(int key){
+    string gettin(int key) const {
         if(M.find(key)==M.end()){
             // If the key dosent have a specific value to it 
             // then returns 0 

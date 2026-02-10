@@ -1,7 +1,7 @@
 /*
  * LRU (Least Recently Used) Cache
  * Implementation using doubly linked list + unordered map.
- * Author: Ayush Agarwal | IIT BHU Varanasi
+ * Author: Aditya Paneru | IIT BHU Varanasi
  */
 #ifndef LRU_CACHE_HPP
 #define LRU_CACHE_HPP

@@ -10,6 +10,7 @@ An **LRU (Least Recently Used)** cache implementation in C++ using a **doubly li
 
 ## Table of Contents
 
+- [Full project explanation](#full-project-explanation) → **EXPLANATION.md**
 - [Project Structure](#project-structure)
 - [What is an LRU Cache?](#what-is-an-lru-cache)
 - [Project Flow (How It Works)](#project-flow-how-it-works)
@@ -22,6 +23,12 @@ An **LRU (Least Recently Used)** cache implementation in C++ using a **doubly li
 - [Motivation and Use Cases](#motivation-and-use-cases)
 - [LRU in Operating Systems](#lru-in-operating-systems)
 - [Code Overview](#code-overview)
+
+---
+
+## Full project explanation
+
+**New to the project?** Read **[EXPLANATION.md](EXPLANATION.md)** for a step-by-step explanation of everything: what a cache is, what LRU means, how the code works, what each file and test does, and how to build and run. No prior background assumed.
 
 ---
 
@@ -39,7 +46,8 @@ LRU-Cache-Implementation/
 ├── build.ps1              # Build + run tests on Windows (PowerShell)
 ├── .gitignore
 ├── README.md
-└── LRU Cache Project File.cpp   # Original single-file version (legacy)
+├── EXPLANATION.md               # Detailed explanation of the whole project
+└── LRU Cache Project File.cpp  # Original single-file version (legacy)
 ```
 
 ---
@@ -337,4 +345,4 @@ Passed: 10  Failed: 0
 
 ---
 
-*Project by Ayush Agarwal — DSA, OOP, OS.*
+*Project by Aditya Paneru — DSA, OOP, OS.*
